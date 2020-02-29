@@ -1,0 +1,22 @@
+{
+  "name": "guesswhofriends",
+  "version": "1.0.0",
+  "description": "Play Guess Who using your facebook friends",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "node",
+    "guess-who",
+    "facebook",
+    "game"
+  ],
+  "author": "Joshua Fishman",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security"
+  }
+}
