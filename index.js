@@ -23,8 +23,10 @@ app.get('/generate', async (request, response) => {
     while (friends.length < numFriends)
     {
       const index = Math.floor(Math.random()*all_friends.length);
-      if (!used[index])
+      if (!used[index]) {
         friends.push(all_friends[index]);
+        used[index] = true;
+      }
     }
   }
   else
@@ -38,41 +40,8 @@ app.get('/generate', async (request, response) => {
   }); 
 });
 
-
-/*
-app.get('/questions', async (request, response) => {
-  let rawdata = fileSystem.readFileSync('friends.json');
-  let questions = JSON.parse(rawdata);
-  response.json(questions);
+app.get('/players', async (request, response) => {
+  const rawdata = fs.readFileSync('subset.json');
+  const subset = JSON.parse(rawdata);
+  response.json(subset);
 });
-
-const answers = new datastore('answers2020.db');
-answers.loadDatabase();
-app.post('/answers', (request, response) => {
-  answers.insert(request.body);
-  response.send("<script>window.location.replace(\"/scoreboard/?success\");</script>");
-});
-
-app.get('/answers', (request, response) => {
-  answers.find({}, (err, data) => {
-    if (err) {
-      console.log(err);
-      response.send("An error in querying the answer database has occurred");
-    } else {
-      response.json(data);
-    }
-  });
-});
-
-app.post('/answer', (request, response) => {
-  const userID = request.body._id;
-  answers.findOne({_id: userID}, (err, data) => {
-    if (err) {
-      console.log(err);
-      response.send("An error in querying the answer database has occurred");
-    } else {
-      response.json(data);
-    }
-  });
-});
-*/
