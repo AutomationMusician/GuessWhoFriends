@@ -1,5 +1,7 @@
 async function main() {
-    const { player, players } = await getPlayers();
+    const urlVars = getUrlVars();
+    document.getElementById("h1").textContent = "Player " + urlVars["p"];
+    const { player, players } = await getPlayers(urlVars);
     generateTable(player, players);
 }
 
@@ -11,9 +13,9 @@ function getUrlVars() {
     return vars;
 }
 
-async function getPlayers() {
-    const playerIndex = getUrlVars()["p"] - 1;
-    const playersFetch = await fetch("/players");
+async function getPlayers(urlVars) {
+    const playerIndex = urlVars["p"] - 1;
+    const playersFetch = await fetch("/players?matchup="+urlVars["matchup"]);
     const players = await playersFetch.json();
     const player = players[playerIndex];
 

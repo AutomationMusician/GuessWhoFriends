@@ -9,7 +9,8 @@ app.use(express.json());
 app.use(express.urlencoded( { extended: true } ));
 
 app.get('/generate', async (request, response) => {
-  const rawdata = fs.readFileSync('friends.json');
+  const matchup = request.query.matchup;
+  const rawdata = fs.readFileSync('data/friends-lists/' + matchup + '.json');
   const all_friends = JSON.parse(rawdata);
   let friends;
   const numFriends = 24;
@@ -34,14 +35,26 @@ app.get('/generate', async (request, response) => {
     friends = all_friends;
   }
 
-  fs.writeFile('subset.json', JSON.stringify(friends), (err) => {
+  if (!fs.existsSync("data/subsets/")){
+      fs.mkdirSync("data/subsets/");
+  }
+
+  fs.writeFile('data/subsets/' + matchup + '.json', JSON.stringify(friends), (err) => {
     if (err) throw err;
     console.log('File is created successfully.');
-  }); 
+  });
+  response.redirect('game-portal.html?matchup='+matchup);
 });
 
 app.get('/players', async (request, response) => {
-  const rawdata = fs.readFileSync('subset.json');
+  const matchup = request.query.matchup;
+  const rawdata = fs.readFileSync('data/subsets/' + matchup + '.json');
   const subset = JSON.parse(rawdata);
   response.json(subset);
+});
+
+app.get('/matchups', async (request, response) => {
+  const rawdata = fs.readFileSync('data/matchups.json');
+  const matchups = JSON.parse(rawdata);
+  response.json(matchups);
 });
