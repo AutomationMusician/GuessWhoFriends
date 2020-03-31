@@ -12,4 +12,8 @@ for (let i=0; i<boxes.length; i++)
   people.push({name, imgUrl});
 }
 
+people.sort((x, y) => {
+  return x.name > y.name;
+});
+
 JSON.stringify(people);
