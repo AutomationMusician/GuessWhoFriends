@@ -18,6 +18,13 @@
             border: 1px solid black;
             text-align: center;
         }
+        #footer {
+            text-align: center;
+        }
+        #opponentURL {
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+        }
     </style>
 </head>
 
@@ -26,6 +33,13 @@
     <table>
         <tbody id="tbody"></tbody>
     </table>
+    <div id="footer">
+        <p>
+            <label for="opponentURL">Send this URL to your opponent:</label>
+            <input type="text" id="opponentURL" value="URL here" disabled/>
+        </p>
+        <button id="newGame">Generate New Game</button>
+    </div>
 </body>
 <script src="game.js"></script>
 

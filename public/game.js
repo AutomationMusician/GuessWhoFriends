@@ -1,6 +1,7 @@
 async function main() {
     const urlVars = getUrlVars();
     document.getElementById("h1").textContent = "Player " + urlVars["p"];
+    generateFooter(urlVars);
     const { player, players } = await getPlayers(urlVars);
     generateTable(player, players);
 }
@@ -15,7 +16,7 @@ function getUrlVars() {
 
 async function getPlayers(urlVars) {
     const playerIndex = urlVars["p"] - 1;
-    const playersFetch = await fetch("/players?matchup="+urlVars["matchup"]);
+    const playersFetch = await fetch("/players?id="+urlVars["id"]);
     const players = await playersFetch.json();
     const player = players[playerIndex];
 
@@ -91,5 +92,17 @@ function generateTable(player, players) {
     tbody.append(tr);
 }
 
+function generateFooter(urlVars) {
+    const opponentP = (urlVars["p"] == 1) ? 2 : 1;
+    const endpoint = window.location.href.split("/game.html")[0];
+    const opponentURL = endpoint + "/game.html?p=" + opponentP + "&id=" + urlVars["id"];
+    const opponentURLelem = document.getElementById("opponentURL");
+    opponentURLelem.value = opponentURL;
+    opponentURLelem.style.width = (opponentURL.length + 2) + "ch";
+
+    document.getElementById("newGame").onclick = () => {
+        location.href = "/generateById?p=" + urlVars["p"] + "&id=" + urlVars["id"];
+    }
+}
 
 main();
